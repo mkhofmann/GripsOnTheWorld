@@ -21,9 +21,17 @@ module legoMFemale(w,h,d,t){
     union(){
         translate([d,0,0,]) rotate([0,0,90])female(w,h,d,t);
         translate([0,0,h]) fillMale(d,w);
+        translate([0,0,-1.8]) fillMale(d,w);
+        rotate([90,0,0]) fillMale(d,h);
     }
 }
 module legoFFemale(w,h,d,t){
+    union(){
+        translate([d,0,0,]) rotate([0,0,90])female(w,h,d,t);
+        translate([0,0,h]) fillFemale(d,w);
+        translate([0,0,-8.6]) fillFemale(d,w);
+        rotate([90,0,0]) fillFemale(d,h);
+    }
 }
 //Male portion to slide into female lock. 
 //Dimmensions must match female part
@@ -34,7 +42,22 @@ union(){
     translate([0,0, (h-2*t)/3]) cube([3/2*w,d,(h-t*2)/3 -2*s]);
 }
 }
-legoMFemale(22,30,60,3);
+module legoMMale(w,h,d,t,s){
+    union(){
+        male(w,h,d,t,s);
+        translate([3/2*w,0,0]) cube([5,d, h-2*t-2*s]);
+        translate([3/2*w+6.8,0,0])rotate([0,-90,0]) fillMale(h-2*t-2*s, d);
+    }
+}
+module legoFMale(w,h,d,t,s){
+    union(){
+        male(w,h,d,t,s);
+        translate([3/2*w,0,0]) cube([5,d, h-2*t-2*s]);
+        translate([3/2*w+13.6,0,0])rotate([0,-90,0]) fillFemale(h-2*t-2*s, d);
+    }
+}
+
+legoFMale(22,30,60,3,2);
 //demonstrates lock 
 module model(w,h,d,t,s){
     female(w,h,d,t);
