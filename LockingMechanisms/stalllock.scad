@@ -1,3 +1,4 @@
+use<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.scad>;
 //Sliding locking 
 //Requires sidewas motion to lock into vertical position. 
 //Design is being altered to be more versital and strong
@@ -16,7 +17,14 @@ union(){
     translate([w-t,0,t+(h-2*t)*2/3]) cube([t,d,(h-2*t)/3+t]);
 }
 }
-
+module legoMFemale(w,h,d,t){
+    union(){
+        translate([d,0,0,]) rotate([0,0,90])female(w,h,d,t);
+        translate([0,0,h]) fillMale(d,w);
+    }
+}
+module legoFFemale(w,h,d,t){
+}
 //Male portion to slide into female lock. 
 //Dimmensions must match female part
 //S: spacing between male and female parts. Will effect friction and should be decided by printer accuracy
@@ -26,7 +34,7 @@ union(){
     translate([0,0, (h-2*t)/3]) cube([3/2*w,d,(h-t*2)/3 -2*s]);
 }
 }
-male(22,30,60,3,1.5);
+legoMFemale(22,30,60,3);
 //demonstrates lock 
 module model(w,h,d,t,s){
     female(w,h,d,t);

@@ -21,13 +21,20 @@ union(){
     translate([w/2,d*2/3,0]) cylinder(r=r,h=h);
 }
 }
-//ignore this module
-module legoFemale(w,h,d,t,r){
+module legoMFemale(w,h,d,t,r){
     union(){
         female(w,h,d,t,r);
         translate([0,d+1.8,0])rotate([90,0,0]) fillMale(w,h);
         translate([-1.8, 0,h]) rotate([0,90,0]) fillMale(w,d);
         translate([w, 0,h]) rotate([0,90,0]) fillMale(w,d);
+    }
+}
+module legoFFemale(w,h,d,t,r){
+    union(){
+        female(w,h,d,t,r);
+        translate([0,d+8.6,0])rotate([90,0,0]) fillFemale(w,h);
+        translate([-8.6, 0,h]) rotate([0,90,0]) fillFemale(w,d);
+        translate([w, 0,h]) rotate([0,90,0]) fillFemale(w,d);
     }
 }
     
@@ -43,14 +50,18 @@ difference(){
     translate([w/2,d*2/3,0]) cylinder(r=r,h=h);
 }
 }   
-//Ignore thi module
-module legoMale(w,h,d,t,r){
+module legoMMale(w,h,d,t,r){
     union(){
         male(w,h,d,t,r);
-        translate([t+.125,0,t+.125]) rotate([90,0,0]) fillMale(w-2*t,h-2*t);
+        translate([t,0,t]) rotate([90,0,0]) fillMale(w-2*t,h-2*t);
     }
 }
-
+module legoFMale(w,h,d,t,r){
+    union(){
+        male(w,h,d,t,r);
+        translate([t,0,t]) rotate([90,0,0]) fillFemale(w-2*t,h-2*t);
+    }
+}
 //Builds 3rd pin part that slides into male and female parts to lock into place, requires minimal dexterity in a seperate arm
 //Usage: spacing nees to be adjusted in this model to slide easily into place
 //Usage: orients pin model to fit into represenation of the full mechanism
@@ -77,4 +88,4 @@ module printable(w,h,d,t,r){
     translate([d,d+w+5,h+t]) rotate([0,180,90])pin(w,h,d,t,r);
 }
 
-legoFemale(31.8,31.8,63.8,4,5);
+legoFMale(31.8,31.8,63.8,4,5);
