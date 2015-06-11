@@ -66,7 +66,7 @@ module model(r,h,lh, r2,s){
     translate([0,0,h+s]) female(r,h,r2,s);
 }
 
-legoFMale( 4, 120, 10,10,2);
+//legoFMale( 4, 120, 10,10,2);
 
 //easy to print
 module print(r,h,lh, r2,s){
@@ -74,3 +74,5 @@ module print(r,h,lh, r2,s){
     translate([-h/2,-2*(r2+s),r2]) rotate([0,90,0])male(r,h,lh,r2,s);
     translate([0,2*(r2+s),0]) female(r,h,r2,s);
 }
+malePin(4,120,10);
+male(4,120,10,10,2);

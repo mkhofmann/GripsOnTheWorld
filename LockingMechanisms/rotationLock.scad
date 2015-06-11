@@ -123,5 +123,5 @@ module print(r,h,t,t1, ir,s){
 
 //Print with arm measurments
 
-legoMFemaleSliced(19, 5, 5,10, 5);
-//translate([0,50,0]) legoMMaleSliced(19,5,5,10,5,1);
+//legoMFemaleSliced(19, 5, 5,10, 5);
+legoMMaleSliced(19,5,5,10,5,1);

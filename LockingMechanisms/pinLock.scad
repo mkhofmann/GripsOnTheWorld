@@ -8,7 +8,7 @@ use<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.
 //d: depth of block in y direction
 //t: thickness of walls
 //r: radius of pin holes
-module female(w,h,d,t,r){//
+module female(w,h,d,t,r,s){//
 difference(){
 union(){
     cube([w,d,t]);//base
@@ -21,17 +21,17 @@ union(){
     translate([w/2,d*2/3,0]) cylinder(r=r,h=h);
 }
 }
-module legoMFemale(w,h,d,t,r){
+module legoMFemale(w,h,d,t,r,s){
     union(){
-        female(w,h,d,t,r);
+        female(w,h,d,t,r,s);
         translate([0,d+1.8,0])rotate([90,0,0]) fillMale(w,h);
         translate([-1.8, 0,h]) rotate([0,90,0]) fillMale(w,d);
         translate([w, 0,h]) rotate([0,90,0]) fillMale(w,d);
     }
 }
-module legoFFemale(w,h,d,t,r){
+module legoFFemale(w,h,d,t,r,s){
     union(){
-        female(w,h,d,t,r);
+        female(w,h,d,t,r,s);
         translate([0,d+8.6,0])rotate([90,0,0]) fillFemale(w,h);
         translate([-8.6, 0,h]) rotate([0,90,0]) fillFemale(w,d);
         translate([w, 0,h]) rotate([0,90,0]) fillFemale(w,d);
@@ -43,23 +43,23 @@ module legoFFemale(w,h,d,t,r){
 //translation hovers in space of related female model.
 //USAGE: for easy manipulation request a translation module
 //dimmensions must match female part.
-module male(w,h,d,t,r){
+module male(w,h,d,t,r,s){
 difference(){
-    translate([t+.125,0,t+.125]) cube([w-2*t-.25,d-2*t-.25,h-2*t-.25]);
+    translate([t+s,0,t+s]) cube([w-2*t-2*s,d-2*t-2*s,h-2*t-2*s]);
     translate([w/2,d/3,0])cylinder(r=r,h=h);
     translate([w/2,d*2/3,0]) cylinder(r=r,h=h);
 }
 }   
-module legoMMale(w,h,d,t,r){
+module legoMMale(w,h,d,t,r,s){
     union(){
-        male(w,h,d,t,r);
-        translate([t,0,t]) rotate([90,0,0]) fillMale(w-2*t,h-2*t);
+        male(w,h,d,t,r,s);
+        translate([t,0,t]) rotate([90,0,0]) fillMale(w-2*t-2*s,h-2*t-2*s);
     }
 }
-module legoFMale(w,h,d,t,r){
+module legoFMale(w,h,d,t,r,s){
     union(){
-        male(w,h,d,t,r);
-        translate([t,0,t]) rotate([90,0,0]) fillFemale(w-2*t,h-2*t);
+        male(w,h,d,t,r,s);
+        translate([t,0,t]) rotate([90,0,0]) fillFemale(w-2*t-2*s,h-2*t-2*s);
     }
 }
 //Builds 3rd pin part that slides into male and female parts to lock into place, requires minimal dexterity in a seperate arm
@@ -67,19 +67,19 @@ module legoFMale(w,h,d,t,r){
 //Usage: orients pin model to fit into represenation of the full mechanism
 //Request translation mechanism for easy use
 //Dimmensions must match male and female parts
-module pin(w,h,d,t,r){
+module pin(w,h,d,t,r,s){
 union(){
     translate([0,0,h]) cube([w,d,t]);//top
-    translate([w/2,d/3,0])cylinder(r=r-.25,h=h);
-    translate([w/2,d*2/3,0]) cylinder(r=r-.25,h=h); 
+    translate([w/2,d/3,0])cylinder(r=r-s,h=h);
+    translate([w/2,d*2/3,0]) cylinder(r=r-s,h=h); 
 }
 }
 
 //models all other parts with matching dimmensions
-module model(w,h,d,t,r){
+module model(w,h,d,t,r,s){
     female(w,h,d,t,r);
-    male(w,h,d,t,r);
-    pin(w,h,d,t,r);
+    male(w,h,d,t,r,s);
+    pin(w,h,d,t,r,s);
 }
 //models matching parts in easy to print configuration
 module printable(w,h,d,t,r){
@@ -88,4 +88,5 @@ module printable(w,h,d,t,r){
     translate([d,d+w+5,h+t]) rotate([0,180,90])pin(w,h,d,t,r);
 }
 
-legoFMale(31.8,31.8,63.8,4,5);
+legoMFemale(24,24,40,3,2.5,1);
+//legoMMale(24,24,40,3,2.5,1);
