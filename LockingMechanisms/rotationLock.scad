@@ -109,7 +109,7 @@ module legoFMaleSliced(r,h,t,t1,ir,s){
        translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, 5]) fillFemale((r*2)/sqrt(2), (r*2)/sqrt(2));
    }
 }
-legoMMaleSliced(20,10,4,8,5,1.5);
+//legoMMaleSliced(20,10,4,8,5,1.5);
 //demonstrates model in operation 
 module model(r,h,t,t1,ir,s){
     female(r,h,t,t1,ir);
@@ -120,3 +120,8 @@ module print(r,h,t,t1, ir,s){
     female(r,h,t,t1,ir);
     translate([2*r+4,0,h]) male(r,h,t,t1,ir,s);
 }
+
+//Print with arm measurments
+
+legoMFemaleSliced(19, 5, 5,10, 5);
+//translate([0,50,0]) legoMMaleSliced(19,5,5,10,5,1);
