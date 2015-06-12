@@ -48,27 +48,43 @@ module legoMFemale(r,h,t,t1,ir){
     union(){
         female(r,h,t,t1,ir);
         translate([0,0,h*3]) cylinder(r=r, h=5);
-        translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, h*3+5]) fillMale((r*2)/sqrt(2), (r*2)/sqrt(2));
+        translate([0,0,h*3+5]) intersection(){
+            cylinder(r=r, h=6.8);
+            translate([-3/2*r,-3/2*r, 0])fillMale(3*r,3*r);
+        }
     }
 }
 
 module legoFFemale(r,h,t,t1,ir){//TODO: proper centering
 union(){
-    female(r,h,t,t1,ir);
-    translate([0,0,h*3]) cylinder(r=r, h=5);
-    translate([-r/sqrt(2), -r/sqrt(2), h*3+5]) fillFemale((r*2)/sqrt(2), (r*2)/sqrt(2));
+        female(r,h,t,t1,ir);
+        translate([0,0,h*3]) cylinder(r=r, h=5);
+        translate([0,0,h*3+5]) intersection(){
+            cylinder(r=r, h=5+8.6);
+            translate([-3/2*r,-3/2*r, 0])fillFemale(3*r,3*r);
+        }
     }
 }
 module legoMFemaleSliced(r,h,t,t1,ir){
-    translate([2*r+5,0,0]) female(r,h,t,t1,ir);
-    cylinder(r=r, h=5);
-    translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, 5]) fillMale((r*2)/sqrt(2), (r*2)/sqrt(2));
+    difference(){
+        legoMFemale(r,h,t,t1,ir);
+        translate([0,0,3*h]) cylinder(r=2*r, h=8.6);
+    }
+    translate([2*r+10,0,-3*h]) intersection(){
+        legoMFemale(r,h,t,t1,ir);
+        translate([0,0,3*h]) cylinder(r=2*r, h=8.6);
+    }
 }
 
 module legoFFemaleSliced(r,h,t,t1,ir){
-    translate([2*r+5,0,0]) female(r,h,t,t1,ir);
-    cylinder(r=r, h=5);
-    translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, 5]) fillFemale((r*2)/sqrt(2), (r*2)/sqrt(2));
+    difference(){
+        legoFFemale(r,h,t,t1,ir);
+        translate([0,0,3*h]) cylinder(r=2*r, h=8.6+5);
+    }
+    translate([2*r+10,0,-3*h]) intersection(){
+        legoFFemale(r,h,t,t1,ir);
+        translate([0,0,3*h]) cylinder(r=2*r, h=8.6+5);
+    }
 }
 //Male piece of mechanism slides into place and locks with rotation
 //dimmensions must match associate female part
@@ -86,28 +102,36 @@ union(){
 module legoMMale(r,h,t,t1,ir,s){
     union(){
         male(r,h,t,t1,ir,s);
-        translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, -h-1.8]) fillMale((r*2)/sqrt(2), (r*2)/sqrt(2));
+        translate([0,0,-h-1.8]) intersection(){
+            cylinder(r=r, h=1.8);
+            translate([-3/2*r,-3/2*r, 0])fillMale(3*r,3*r);
+        }
     }
 }
 module legoFMale(r,h,t,t1,ir,s){
     union(){
         male(r,h,t,t1,ir,s);
-        translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, -h]) mirror([0,0,1]) fillFemale((r*2)/sqrt(2), (r*2)/sqrt(2));
+        translate([0,0,-h-8.6]) intersection(){
+            cylinder(r=r, h=8.6);
+            translate([-3/2*r,-3/2*r, 0])fillFemale(3*r,3*r);
+        }
     }
 }
 module legoMMaleSliced(r,h,t,t1,ir,s){
-    translate([2*r+5,0,h]) male(r,h,t,t1,ir,s); 
-   union(){
-       cylinder(r=r, h=5);
-       translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, 5]) fillMale((r*2)/sqrt(2), (r*2)/sqrt(2));
-   }
+    translate([0,0,h]) male(r,h,t,t1,ir,s);
+    translate([r*2+10,0,0]) cylinder(r=r, h=5);
+    translate([r*2+10,0,5]) intersection(){
+        cylinder(r=r,h=5);
+        translate([-3/2*r,-3/2*r, 0])fillMale(3*r,3*r);
+    }
 }
 module legoFMaleSliced(r,h,t,t1,ir,s){
-   translate([2*r+5,0,h]) male(r,h,t,t1,ir,s); 
-   union(){
-       cylinder(r=r, h=5);
-       translate([-r/sqrt(2)+2.2, -r/sqrt(2)+2.2, 5]) fillFemale((r*2)/sqrt(2), (r*2)/sqrt(2));
-   }
+   translate([0,0,h]) male(r,h,t,t1,ir,s);
+    translate([r*2+10,0,0]) cylinder(r=r, h=5);
+    translate([r*2+10,0,5]) intersection(){
+        cylinder(r=r,h=8.6);
+        translate([-3/2*r,-3/2*r, 0])fillFemale(3*r,3*r);
+    }
 }
 //legoMMaleSliced(20,10,4,8,5,1.5);
 //demonstrates model in operation 
@@ -124,4 +148,4 @@ module print(r,h,t,t1, ir,s){
 //Print with arm measurments
 
 //legoMFemaleSliced(19, 5, 5,10, 5);
-legoMMaleSliced(19,5,5,10,5,1);
+legoFFemaleSliced(20.75, 5, 13, 15, 2,1.5);

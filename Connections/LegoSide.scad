@@ -42,13 +42,7 @@ module fillMale(w,h){
 }
 //female part is built into 
 module fillFemale(w,h){
-    union(){
-        translate([8,8,0]) boardFemale(((w+.2)/8)-1,((h+.2)/8)-1);
-        difference(){
-            cube([floor((w+.2)/8)*8,floor((h+.2)/8)*8,8.6]);
-            translate([1.2,1.2,0]) cube([floor((w+.2)/8)*8-2.4, floor((h+.2)/8)*8-2.4, 8.6]);
-        }
-    }
+    translate([8,8,0]) boardFemale(((w+.2)/8)-1,((h+.2)/8)-1);
 }
 
 
