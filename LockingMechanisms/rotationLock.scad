@@ -50,7 +50,7 @@ module legoMFemale(r,h,t,t1,ir){
         translate([0,0,h*3]) cylinder(r=r, h=5);
         translate([0,0,h*3+5]) intersection(){
             cylinder(r=r, h=6.8);
-            translate([-3/2*r,-3/2*r, 0])fillMale(3*r,3*r);
+            translate([-3/2*r,-3/2*r,0])fillMale(3*r,3*r);
         }
     }
 }
@@ -61,7 +61,7 @@ union(){
         translate([0,0,h*3]) cylinder(r=r, h=5);
         translate([0,0,h*3+5]) intersection(){
             cylinder(r=r, h=5+8.6);
-            translate([-3/2*r,-3/2*r, 0])fillFemale(3*r,3*r);
+            translate([-3/2*r,-3/2*r,0])fillFemale(3*r,3*r);
         }
     }
 }
@@ -147,5 +147,5 @@ module print(r,h,t,t1, ir,s){
 
 //Print with arm measurments
 
-//legoMFemaleSliced(19, 5, 5,10, 5);
-legoFMaleSliced(20.75, 5, 13, 15, 2,1.5);
+legoFFemaleSliced(22, 5, 13,15,3);
+//legoMMaleSliced(22, 5, 13, 15, 3,1.5);
