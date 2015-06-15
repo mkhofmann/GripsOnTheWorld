@@ -148,4 +148,4 @@ module print(r,h,t,t1, ir,s){
 //Print with arm measurments
 
 //legoMFemaleSliced(19, 5, 5,10, 5);
-legoFFemaleSliced(20.75, 5, 13, 15, 2,1.5);
+legoFMaleSliced(20.75, 5, 13, 15, 2,1.5);

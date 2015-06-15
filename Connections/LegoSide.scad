@@ -5,8 +5,8 @@ module legoMale(){
 //ignore utility
 module legoFemale(){
 difference(){
-    cylinder(r=3.25,h=8.6);
-    cylinder(r=2.4,h=8.6);
+    cylinder(r=3.25,h=4);
+    cylinder(r=2.4,h=4);
 }
 }
 //use this module if the lego builds on from the base    
@@ -42,7 +42,7 @@ module fillMale(w,h){
 }
 //female part is built into 
 module fillFemale(w,h){
-    translate([8,8,0]) boardFemale(((w+.2)/8)-1,((h+.2)/8)-1);
+    boardFemale(((w+.2)/8)-1,((h+.2)/8)-1);
 }
 
 

@@ -17,25 +17,44 @@ union(){
     translate([0,0,h-t]) cube([w,d,t]);//top
     translate([0,d-t,0]) cube([w,t,h]);//back
 }
-    translate([w/2,d/3,0])cylinder(r=r,h=h);
-    translate([w/2,d*2/3,0]) cylinder(r=r,h=h);
+    translate([w/2,d/3,0])cylinder(r=r+s,h=h);
+    translate([w/2,d*2/3,0]) cylinder(r=r+s,h=h);
 }
 }
 module legoMFemale(w,h,d,t,r,s){
-    union(){
-        female(w,h,d,t,r,s);
-        translate([0,d+1.8,0])rotate([90,0,0]) fillMale(w,h);
-        translate([-1.8, 0,h]) rotate([0,90,0]) fillMale(w,d);
-        translate([w, 0,h]) rotate([0,90,0]) fillMale(w,d);
+union(){
+    female(w,h,d,t,r,s);
+    intersection(){
+        translate([0,1.8,0]) female(w,h,d,t,r,s);
+        translate([0,d+1.8,0])rotate([90,0,0]) fillMale(w+8,h+8); 
     }
+    intersection(){
+        translate([-1.8,0,0]) female(w,h,d,t,r,s);
+        rotate([0,-90,0]) fillMale(h+8, d+8);
+    }
+    intersection(){
+        translate([1.8,0,0]) female(w,h,d,t,r,s);
+        translate([w+1.8,0,0]) rotate([0,-90,0]) fillMale(h+8,d+8);
+    }
+    
+}
 }
 module legoFFemale(w,h,d,t,r,s){
-    union(){
-        female(w,h,d,t,r,s);
-        translate([0,d+8.6,0])rotate([90,0,0]) fillFemale(w,h);
-        translate([-8.6, 0,h]) rotate([0,90,0]) fillFemale(w,d);
-        translate([w, 0,h]) rotate([0,90,0]) fillFemale(w,d);
+union(){
+    female(w,h,d,t,r,s);
+    intersection(){
+        translate([0,4,0]) cube([w,d,h]);
+        translate([0,d+4,0])rotate([90,0,0]) fillFemale(w+8,h+8); 
     }
+    intersection(){
+        translate([-4,0,0]) cube([w,d,h]);
+        rotate([0,-90,0]) fillFemale(h+8, d+8);
+    }
+    intersection(){
+        translate([4,0,0]) cube([w,d,h]);
+        translate([w+4,0,0]) rotate([0,-90,0]) fillFemale(h+8,d+8);
+    }
+}
 }
     
 //width,height,depth (x,z,y), thickness, radius of pin, dimmensions from female
@@ -51,15 +70,21 @@ difference(){
 }
 }   
 module legoMMale(w,h,d,t,r,s){
-    union(){
-        male(w,h,d,t,r,s);
-        translate([t,0,t]) rotate([90,0,0]) fillMale(w-2*t-2*s,h-2*t-2*s);
+union(){
+   male(w,h,d,t,r,s);
+   intersection(){
+       translate([0,-1.8,0]) male(w,h,d,t,r,s);
+       rotate([90,0,0]) fillMale(w,h);
     }
 }
+}
 module legoFMale(w,h,d,t,r,s){
-    union(){
+union(){
         male(w,h,d,t,r,s);
-        translate([t,0,t]) rotate([90,0,0]) fillFemale(w-2*t-2*s,h-2*t-2*s);
+        intersection(){
+            translate([0,-4,0]) male(w,h,d,t,r,s);
+            rotate([90,0,0]) fillFemale(w,h);
+        }
     }
 }
 //Builds 3rd pin part that slides into male and female parts to lock into place, requires minimal dexterity in a seperate arm
@@ -88,5 +113,5 @@ module printable(w,h,d,t,r){
     translate([d,d+w+5,h+t]) rotate([0,180,90])pin(w,h,d,t,r);
 }
 
-legoMFemale(24,24,40,3,2.5,1);
-//legoMMale(24,24,40,3,2.5,1);
+//legoMFemale(30,30,40,3,2,1.5);
+legoMMale(30,30,40,3,2,1.5);

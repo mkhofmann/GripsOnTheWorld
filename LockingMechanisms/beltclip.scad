@@ -29,15 +29,21 @@ module mountingClip(w,h,t){
 }
 
 module legoMClip(w,h,t){
-    translate([0,0,t])rotate([90,0,0])union(){
-        mountingClip(w,h,t);
-        translate([0,t*3+1.8,0])rotate([90,0,0]) fillMale(w,h);
+translate([0,0,t])rotate([90,0,0])union(){
+    mountingClip(w,h,t);
+    intersection(){   
+        cube([w,4*t+1.8,h]);
+        translate([0,t*3+1.8,0])rotate([90,0,0]) fillMale(w+16,h+16);
     }
+}
 }
 module legoFClip(w,h,t){
-    translate([0,0,t]) rotate([90,0,0])union(){
-        mountingClip(w,h,t);
-        translate([0,t*3+8.6,0])rotate([90,0,0]) fillFemale(w,h);
+translate([0,0,t])rotate([90,0,0])union(){
+    mountingClip(w,h,t);
+    intersection(){   
+        cube([w,4*t+4,h]);
+        translate([0,t*3+4,0])rotate([90,0,0]) fillFemale(w+16,h+16);
     }
 }
-legoFClip(60,50,3);   
+}
+legoMClip(60,50,3);   
