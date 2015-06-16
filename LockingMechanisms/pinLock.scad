@@ -65,8 +65,8 @@ union(){
 module male(w,h,d,t,r,s){
 difference(){
     translate([t+s,0,t+s]) cube([w-2*t-2*s,d-2*t-2*s,h-2*t-2*s]);
-    translate([w/2,d/3,0])cylinder(r=r,h=h);
-    translate([w/2,d*2/3,0]) cylinder(r=r,h=h);
+    translate([w/2,d/3,0])cylinder(r=r+s,h=h);
+    translate([w/2,d*2/3,0]) cylinder(r=r+s,h=h);
 }
 }   
 module legoMMale(w,h,d,t,r,s){
@@ -83,7 +83,7 @@ union(){
         male(w,h,d,t,r,s);
         intersection(){
             translate([0,-4,0]) male(w,h,d,t,r,s);
-            rotate([90,0,0]) fillFemale(w,h);
+            rotate([90,0,0]) fillFemale(w+16,h+16);
         }
     }
 }
@@ -95,8 +95,8 @@ union(){
 module pin(w,h,d,t,r,s){
 union(){
     translate([0,0,h]) cube([w,d,t]);//top
-    translate([w/2,d/3,0])cylinder(r=r-s,h=h);
-    translate([w/2,d*2/3,0]) cylinder(r=r-s,h=h); 
+    translate([w/2,d/3,0])cylinder(r=r,h=h);
+    translate([w/2,d*2/3,0]) cylinder(r=r,h=h); 
 }
 }
 
@@ -113,5 +113,5 @@ module printable(w,h,d,t,r){
     translate([d,d+w+5,h+t]) rotate([0,180,90])pin(w,h,d,t,r);
 }
 
-//legoMFemale(30,30,40,3,2,1.5);
-legoMMale(30,30,40,3,2,1.5);
+pin(40,40,65,6,5,1.5);
+//legoFMale(30,30,40,3,2,1.5);
