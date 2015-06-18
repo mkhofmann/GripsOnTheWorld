@@ -10,25 +10,24 @@ module male(w, w1, d, d1, l, l1){
 translate([0,l,0]) union(){
    cube([w1, l1,d1]);
    translate([(w1-w)/2, -l, (d1-d)/2])cube([w,l,d]); 
+   translate([(w1-w)/2, -l-l1, (d1-d)/2])cube([w,l1,d]);
 }
 }
 module legoMMale(w,w1,d,d1,l,l1){
 union(){
     male(w,w1,d,d1,l,l1);
-    translate([0,-5,0]) cube([w1,5,d1]);
     intersection(){
-        translate([0,-5-1.8,0]) cube([w1,5,d1]);
-        translate([0,-5,0]) rotate([90,0,0]) fillMale(w1+8,d1+8);
+        translate([0,-1.8,0]) male(w,w1,d,d1,l,l1);
+        translate([0,-l1,0]) rotate([90,0,0])fillMale(w+16, d1+16);
     }
 }
 }
 module legoFMale(w,w1,d,d1,l,l1){
 union(){
     male(w,w1,d,d1,l,l1);
-    translate([0,-5,0]) cube([w1,5,d1]);
     intersection(){
-        translate([0,-5-4,0]) cube([w1,5,d1]);
-        translate([0,-5,0]) rotate([90,0,0]) fillFemale(w1+16,d1+16);
+        translate([0,-4,0]) male(w,w1,d,d1,l,l1);
+        translate([0,-l1,0]) rotate([90,0,0]) fillFemale(w+16, d1+16);
     }
 }
 }
@@ -36,67 +35,52 @@ union(){
 //tw: thickness of walls in x direction
 //td: thickness of walls in z direction
 //s: spacing between male and female parts. For friction and printer ability
-module female(w, w1, d, d1, l, l1,tw,td,s){
+module female(w, w1, d, d1, l, l1,tw,td,tl,s){
 difference(){
-    cube([w1+2*s+2*tw, l+l1+l1+s, d1+2*s+2*td]);
-    translate([tw+(w1-w)/2,0,td+(d1-d)/2]) cube([w+2*s, l, d+2*s+td+(d1-d)/2]);//neck
-    translate([tw, l, td]) cube([w1+2*s, l1, d1+s*2]);//head
-    translate([tw, l+l1, td]) cube([w1+2*s, l1+s, d1+s*2+ td]);//head slot
-    translate([tw+(w1-w)/2, l,td+d1+2*s]) cube([w+2*s,l1, td]); //lock slot    
+    cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
+    translate([tw,0,td]) male(w+2*s, w1+2*s, d+2*s, d1+2*s, l+s, l1+s); 
+    translate([tw,l,td]) male(w+2*s, w1+2*s, d+2*s, d1+2*s, l+s, l1+s); 
+    translate([tw,l+l1+s,td+2*s+d1])cube([w1+2*s,l1+s, td]);
+    translate([tw+(w1-w)/2,0,td+(d1-d)/2]) cube([w+2*s,l+s+l1,td+2*s+d1]);
 }
 }
 
-module legoMFemale(w, w1, d, d1, l, l1,tw,td,s){
+module legoMFemale(w, w1, d, d1, l, l1,tw,td,tl,s){
 union(){
-    female(w, w1, d, d1, l, l1,tw,td,s);
+    female(w, w1, d, d1, l, l1,tw,td,tl,s);
     intersection(){
-        translate([0,1.8,0]) female(w, w1, d, d1, l, l1,tw,td,s);
-        translate([0,l+l1+l1+s+1.8,0]) rotate([90,0,0]) fillMale(w1+2*s+2*tw+16,d1+2*s+2*td+16);
+        translate([0,1.8,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
+        translate([0,l+l1+l1+s+tl+1.8,0]) rotate([90,0,0]) fillMale(w1+2*s+2*tw+16,d1+2*s+2*td+16);
     }
     intersection(){
-        translate([-1.8,0,0]) cube([w1+2*s+2*tw, l+l1+l1+s, d1+2*s+2*td]);
-        rotate([0,-90,0]) fillMale(d1+2*s+2*td+16, l+l1+l1+s+16);
+        translate([-1.8,0,0])cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
+        rotate([0,-90,0]) fillMale(d1+2*s+2*td+16, l+l1+l1+s*2+tl+16);
     }
     intersection(){
-        translate([1.8,0,0]) cube([w1+2*s+2*tw, l+l1+l1+s, d1+2*s+2*td]);
-        translate([w1+2*s+2*tw+1.8,0,0]) rotate([0,-90,0]) fillMale(d1+2*s+2*td+16, l+l1+l1+s+16);
-    }
-    intersection(){
-        translate([0,0,-1.8]) cube([w1+2*s+2*tw, l+l1+l1+s, d1+2*s+2*td]);
-        translate([0,0,-1.8]) fillMale(w1+2*s+2*tw+16, l+l1+l1+s+16);
-    }   
+        translate([1.8,0,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
+        translate([w1+2*s+2*tw+1.8,0,0]) rotate([0,-90,0]) fillMale(d1+2*s+2*td+16, l+l1+l1+s*2+tl+16);
+    } 
 }
 }
-module legoFFemale(w, w1, d, d1, l, l1,tw,td,s){
+module legoFFemale(w, w1, d, d1, l, l1,tw,td,tl,s){
 union(){
-    female(w, w1, d, d1, l, l1,tw,td,s);
+    female(w, w1, d, d1, l, l1,tw,td,tl,s);
     intersection(){
-        translate([0,4,0]) female(w, w1, d, d1, l, l1,tw,td,s);
-        translate([0,l+l1+l1+s+4,0]) rotate([90,0,0]) fillFemale(w1+2*s+2*tw+16,d1+2*s+2*td+16);
+        translate([0,4,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
+        translate([0,l+l1+l1+s+tl+4,0]) rotate([90,0,0]) fillFemale(w1+2*s+2*tw+16,d1+2*s+2*td+16);
     }
-    intersection(){
-        translate([-4,0,0]) cube([w1+2*s+2*tw, l+l1+l1+s, d1+2*s+2*td]);
-        rotate([0,-90,0]) fillFemale(d1+2*s+2*td+16, l+l1+l1+s+16);
-    }
-    intersection(){
-        translate([4,0,0]) cube([w1+2*s+2*tw, l+l1+l1+s, d1+2*s+2*td]);
-        translate([w1+2*s+2*tw+4,0,0]) rotate([0,-90,0]) fillFemale(d1+2*s+2*td+16, l+l1+l1+s+16);
-    }
-    intersection(){
-        translate([0,0,-4]) cube([w1+2*s+2*tw, l+l1+l1+s, d1+2*s+2*td]);
-        translate([0,0,-4]) fillFemale(w1+2*s+2*tw+16, l+l1+l1+s+16);
-    }   
+
 }
 }
 
 //demonstrates model
-module model(w, w1, d, d1, l,l1,tw,td,s){
-    female(w, w1, d, d1,l,l1,tw,td,s);
+module model(w, w1, d, d1, l,l1,tw,td,tl,s){
+    female(w, w1, d, d1,l,l1,tw,td,tl,s);
     translate([tw+s,0,td+s]) male(w, w1, d, d1,l,l1);
 }
 
-legoMMale(10,15,10,15,10,10,5,5,1.5);
-
+//legoMMale(10,20,10,20,10,10);
+legoFMale(16,25,16,25,10,10,10,10,5,1.5);
 //makes model easy to print
 module print(w, w1, d, d1,l,l1,tw,td,s){
     rotate([90,0,0]) female(w, w1, d, d1,l,l1,tw,td,s );

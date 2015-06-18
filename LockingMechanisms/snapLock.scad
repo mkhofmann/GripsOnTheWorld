@@ -38,9 +38,20 @@ union(){
     male(w,d,h, dl, wl, wi,wt, dt);
     intersection(){
         translate([0,-4,0]) cube([w,d,h]);
-        rotate([90,0,0]) fillFemale(w+16,h+16);
+        translate([0,0,4]) rotate([90,0,0]) fillFemale(w+16,h+16);
     }   
 }
+}
+module legoFMaleSliced(w,d,h, dl, wl, wi,wt, dt){
+ difference(){
+     legoFMale(w,d,h, dl, wl, wi,wt, dt);
+     translate([0,-4,0]) cube([w,4+d/2, h]);
+ }
+ translate([0,-h,h/2]) rotate([-90,0,0]) difference(){
+     legoFMale(w,d,h, dl, wl, wi,wt, dt);
+     translate([0,d/2,0]) cube([w,d+dl+dt, h]);
+ }
+ 
 }
 //insertion point for buckle, buckle must be pinched to interlock
 //dimmensions must match male partner
@@ -71,11 +82,7 @@ union(){
     female(w,d,h,wl,wi,s);
     intersection(){
         translate([0,0,-4]) female(w,d,h,wl,wi,s);
-        translate([0,0,-4]) fillFemale(w+16, d+16);
-    }
-    intersection(){
-        translate([0,0,1.8]) female(w,d,h,wl,wi,s);
-        translate([0,0,h*2]) fillFemale(w+16, d+16);
+        translate([0,4,-4]) fillFemale(w+16, d+16);
     }
 }
 }
@@ -91,4 +98,5 @@ module print(w,d,h,dl,wl,wi,wt,dt,s){
     translate([0,-s,0]) rotate([90,0,0]) female(w,d,h,wl,wi,s);
 }
 
-legoMFemale(32,8,8,5,5,1.5);
+legoFMaleSliced(40,15, 15, 40,5, 10,8, 5,1.5);
+//legoFFemale(40,15,15, 5,10,1.5);

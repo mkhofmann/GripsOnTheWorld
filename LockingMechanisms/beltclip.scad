@@ -46,4 +46,4 @@ translate([0,0,t])rotate([90,0,0])union(){
     }
 }
 }
-legoMClip(60,50,3);   
+legoMClip(60,50,5);   
