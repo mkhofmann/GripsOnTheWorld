@@ -9,6 +9,7 @@ module bowSpring(){
         translate([0,0,-100]) cube(100);
         translate([-100,0,-100]) cube(100);
         translate([-100,-100,0]) cube(100);
+        translate([0,-100,-100]) cube(100);
         translate([-100,-100,-100]) cube(100);
     }
     
@@ -29,12 +30,21 @@ module endOfWristAdaptorCyl(){
     }
 }
 
+module endOfWristAdaptorShelf(){
+union(){
+    bowSpring();
+    translate([0,0,-5]) cube([40, 40,5]);
+}
+}
+
+//endOfWristAdaptorShelf();
+
 //LEGOS
 module legoMEndOfWristCube(){
     union(){
         endOfWristAdaptorCube();
         intersection(){
-            translate([0,0,8.6])endOfWristAdaptorCube();
+            translate([0,0,4])endOfWristAdaptorCube();
             translate([-4,-4,18]) fillMale(60,60);   
         }
     }
@@ -62,13 +72,31 @@ module legoFEndOfWristCyl(){
     union(){
         endOfWristAdaptorCyl();
         intersection(){
-            translate([0,0,8.6]) endOfWristAdaptorCyl();
+            translate([0,0,4]) endOfWristAdaptorCyl();
             translate([-4,-4,18]) fillFemale(60,60);
         }
     }
 }
 
+module legoMEndOfWristShelf(){
+    union(){
+        endOfWristAdaptorShelf();
+        intersection(){
+            translate([0,0,1.8]) endOfWristAdaptorShelf();
+            translate([20,0,0]) fillMale(36,56);
+        }
+    }
+}
 
+module legoFEndOfWristShelf(){
+    union(){
+        endOfWristAdaptorShelf();
+        intersection(){
+            translate([0,0,4]) endOfWristAdaptorShelf();
+            translate([22,0,0]) fillFemale(36,56);
+        }
+    }
+}
 
 
 

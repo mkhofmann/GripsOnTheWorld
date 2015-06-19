@@ -100,7 +100,6 @@ module printable(w,h,d,t,r){
     translate([w+5,0,-t-.125]) male(w,h,d,t,r);
     translate([d,d+w+5,h+t]) rotate([0,180,90])pin(w,h,d,t,r);
 }
-
-pin(40,40,65,6,10,1.5);
+legoMFemale(40,40,65,6,10,1.5);
 //pin(40,40,65,6,5,1.5);
 //legoFMale(30,30,40,3,2,1.5);
