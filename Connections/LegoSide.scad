@@ -1,6 +1,6 @@
 //ignore utility
 module legoMale(){
-    cylinder(r=2.4,h=1.8);
+    cylinder(r=2.2,h=1.8);
 }
 //ignore utility
 module legoFemale(){

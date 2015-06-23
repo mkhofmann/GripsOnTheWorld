@@ -62,7 +62,7 @@ union(){
    male(w,h,d,t,r,s);
    intersection(){
        translate([0,-1.8-t,0]) male(w,h,d,t,r,s);
-       translate([0,-t,0])rotate([90,0,0]) fillMale(w,h);
+       translate([0,-t-1.8,0])rotate([90,0,0]) fillMale(w+16,h+16);
     }
 }
 }
@@ -100,6 +100,4 @@ module printable(w,h,d,t,r){
     translate([w+5,0,-t-.125]) male(w,h,d,t,r);
     translate([d,d+w+5,h+t]) rotate([0,180,90])pin(w,h,d,t,r);
 }
-legoMFemale(40,40,65,6,10,1.5);
-//pin(40,40,65,6,5,1.5);
-//legoFMale(30,30,40,3,2,1.5);
+legoMFemale(40,40,65,4,4,2);
