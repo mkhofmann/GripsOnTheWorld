@@ -1,4 +1,4 @@
-use<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.scad>;
+include<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.scad>;
 //From the model viewing angle. Slides down into system then is pulled back to lock into all directions accept forward. Can be repositioned for user ability and nees. 
 //w: width (x direction) of small rod
 //w1: width (x direction) of large locking head
@@ -9,16 +9,16 @@ use<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.
 module male(w, w1, d, d1, l, l1){
 translate([0,l,0]) union(){
    cube([w1, l1,d1]);
-   translate([(w1-w)/2, -l, (d1-d)/2])cube([w,l,d]); 
-   translate([(w1-w)/2, -l-l1, (d1-d)/2])cube([w,l1,d]);
+   translate([(w1-w)/2, -l*2-lmh, (d1-d)/2])cube([w,l+lmh,d]); 
+   translate([(w1-w)/2, -l, (d1-d)/2])cube([w,l1,d]);
 }
 }
 module legoMMale(w,w1,d,d1,l,l1){
 union(){
     male(w,w1,d,d1,l,l1);
     intersection(){
-        translate([0,-1.8,0]) male(w,w1,d,d1,l,l1);
-        translate([0,-l1,0]) rotate([90,0,0])fillMale(w+16, d1+16);
+        translate([0,-lmh,0]) male(w,w1,d,d1,l,l1);
+        translate([0,-lmh-l,0]) rotate([90,0,0])fillMale(w, d1);
     }
 }
 }
@@ -26,8 +26,8 @@ module legoFMale(w,w1,d,d1,l,l1){
 union(){
     male(w,w1,d,d1,l,l1);
     intersection(){
-        translate([0,-4,0]) male(w,w1,d,d1,l,l1);
-        translate([0,-l1,0]) rotate([90,0,0]) fillFemale(w+16, d1+16);
+        translate([0,-lfh,0]) male(w,w1,d,d1,l,l1);
+        translate([0,-lmh-l,0]) rotate([90,0,0])fillFemale(w, d1);
     }
 }
 }
@@ -49,25 +49,18 @@ module legoMFemale(w, w1, d, d1, l, l1,tw,td,tl,s){
 union(){
     female(w, w1, d, d1, l, l1,tw,td,tl,s);
     intersection(){
-        translate([0,1.8,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
-        translate([0,l+l1+l1+s+tl+1.8,0]) rotate([90,0,0]) fillMale(w1+2*s+2*tw+16,d1+2*s+2*td+16);
+        translate([0,lmh,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
+        translate([0,l+l1+l1+s+tl+lmh,0]) rotate([90,0,0]) fillMale(w1+2*s+2*tw,d1+2*s+2*td);
     }
-    intersection(){
-        translate([-1.8,0,0])cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
-        rotate([0,-90,0]) fillMale(d1+2*s+2*td+16, l+l1+l1+s*2+tl+16);
-    }
-    intersection(){
-        translate([1.8,0,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
-        translate([w1+2*s+2*tw+1.8,0,0]) rotate([0,-90,0]) fillMale(d1+2*s+2*td+16, l+l1+l1+s*2+tl+16);
-    } 
+
 }
 }
 module legoFFemale(w, w1, d, d1, l, l1,tw,td,tl,s){
 union(){
     female(w, w1, d, d1, l, l1,tw,td,tl,s);
     intersection(){
-        translate([0,4,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
-        translate([0,l+l1+l1+s+tl+4,0]) rotate([90,0,0]) fillFemale(w1+2*s+2*tw+16,d1+2*s+2*td+16);
+        translate([0,lfh,0]) cube([w1+2*s+2*tw, l+l1+l1+s+tl, d1+2*s+2*td]);
+        translate([0,l+l1+l1+s+tl+lfh,0]) rotate([90,0,0]) fillFemale(w1+2*s+2*tw,d1+2*s+2*td);
     }
 
 }
@@ -79,7 +72,6 @@ module model(w, w1, d, d1, l,l1,tw,td,tl,s){
     translate([tw+s,0,td+s]) male(w, w1, d, d1,l,l1);
 }
 
-//legoMMale(10,20,10,20,10,10);
 legoFMale(16,25,16,25,10,10,10,10,5,1.5);
 //makes model easy to print
 module print(w, w1, d, d1,l,l1,tw,td,s){

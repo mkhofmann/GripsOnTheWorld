@@ -1,4 +1,4 @@
-use<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.scad>;
+include<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.scad>;
 //USAGE: This model needs to have spacing and custom spacing adjusted. Pins are too tight to slide into model. 
 
 //prints female portion of attachment mechanism
@@ -11,8 +11,7 @@ use<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.
 module female(w,h,d,t,r,s){
     difference(){
         cube([w,d,h]);
-        translate([w/2,(d-t)/3,0]) cylinder(r=r+s, h=h);
-        translate([w/2,(d-t)/3*2,0]) cylinder(r=r+s, h=h);
+        translate([w/2,(d-t)/2,0]) cylinder(r=r+s, h=h);
         translate([t,-t,t]) cube([w-2*t,d+s,h-2*t]);
     }
 }
@@ -21,16 +20,8 @@ module legoMFemale(w,h,d,t,r,s){
 union(){
     female(w,h,d,t,r,s);
     intersection(){
-        translate([0,1.8,0]) female(w,h,d,t,r,s);
-        translate([0,d+1.8,0])rotate([90,0,0]) fillMale(w+8,h+8); 
-    }
-    intersection(){
-        translate([-1.8,0,0]) female(w,h,d,t,r,s);
-        rotate([0,-90,0]) fillMale(h+8, d+8);
-    }
-    intersection(){
-        translate([1.8,0,0]) female(w,h,d,t,r,s);
-        translate([w+1.8,0,0]) rotate([0,-90,0]) fillMale(h+8,d+8);
+        translate([0,lmh,0]) cube([w,d,h]);
+        translate([0,d+lmh,0])rotate([90,0,0]) fillMale(w,h); 
     }
     
 }
@@ -39,8 +30,8 @@ module legoFFemale(w,h,d,t,r,s){
 union(){
     female(w,h,d,t,r,s);
     intersection(){
-        translate([0,4,0]) cube([w,d,h]);
-        translate([0,d+4,0])rotate([90,0,0]) fillFemale(w+16,h+16); 
+        translate([0,lfh,0]) cube([w,d,h]);
+        translate([0,d+lfh,0])rotate([90,0,0]) fillFemale(w,h); 
     }
 }
 }
@@ -50,30 +41,29 @@ union(){
 //translation hovers in space of related female model.
 //USAGE: for easy manipulation request a translation module
 //dimmensions must match female part.
-module male(w,h,d,r,s,t){
+module male(w,h,d,t,r,s){
     difference(){
-       translate([t+s,-t-s,t+s]) cube([w-2*t-2*s,d,h-2*t-2*s]);
-       translate([w/2,(d-t)/3,0]) cylinder(r=r+s, h=h);
-        translate([w/2,(d-t)/3*2,0]) cylinder(r=r+s, h=h);
+       translate([t+s,-t,t+s]) cube([w-2*t-2*s,d,h-2*t-2*s]);
+       translate([w/2,(d-t)/2,0]) cylinder(r=r+s, h=h);
     }
 }   
 module legoMMale(w,h,d,t,r,s){
 union(){
    male(w,h,d,t,r,s);
    intersection(){
-       translate([0,-1.8-t,0]) male(w,h,d,t,r,s);
-       translate([0,-t-1.8,0])rotate([90,0,0]) fillMale(w+16,h+16);
+       translate([0,-t,0]) male(w,h,d,t,r,s);
+       translate([0,-t,0])rotate([90,0,0]) fillMale(w,h);
     }
 }
 }
 module legoFMale(w,h,d,t,r,s){
 union(){
-        male(w,h,d,t,r,s);
-        intersection(){
-            translate([0,-4-t,0]) male(w,h,d,t,r,s);
-            translate([0,-t,0])rotate([90,0,0]) fillFemale(w+16,h+16);
-        }
+   male(w,h,d,t,r,s);
+   intersection(){
+       translate([0,-t,0]) male(w,h,d,t,r,s);
+       translate([0,-t,0])rotate([90,0,0]) fillFemale(w,h);
     }
+}
 }
 //Builds 3rd pin part that slides into male and female parts to lock into place, requires minimal dexterity in a seperate arm
 //Usage: spacing nees to be adjusted in this model to slide easily into place
@@ -82,22 +72,16 @@ union(){
 //Dimmensions must match male and female parts
 module pin(w,h,d,t,r,s){
 union(){
-    translate([0,0,h]) cube([w,d,t]);//top
-    translate([w/2,d/3,0])cylinder(r=r,h=h);
-    translate([w/2,d*2/3,0]) cylinder(r=r,h=h); 
+    translate([0,-t,h]) cube([w,d,t]);//top
+    translate([w/2,(d-t)/2,0]) cylinder(r=r, h=h);; 
 }
 }
 
 //models all other parts with matching dimmensions
 module model(w,h,d,t,r,s){
-    female(w,h,d,t,r,s);
-    male(w,h,d,t,r,s);
-    //pin(w,h,d,t,r,s);
+   female(w,h,d,t,r,s);
+   male(w,h,d,t,r,s);
+   pin(w,h,d,t,r,s);
 }
-//models matching parts in easy to print configuration
-module printable(w,h,d,t,r){
-    translate([0,0,d])rotate([-90,0,0]) female(w,h,d,t,r);
-    translate([w+5,0,-t-.125]) male(w,h,d,t,r);
-    translate([d,d+w+5,h+t]) rotate([0,180,90])pin(w,h,d,t,r);
-}
-legoMFemale(40,40,65,4,4,2);
+
+legoFMale(40,25,20,4,4,1.5);

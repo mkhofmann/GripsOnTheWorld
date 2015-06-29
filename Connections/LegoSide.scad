@@ -1,12 +1,14 @@
+lfh=8;
+lmh=1.8;
 //ignore utility
 module legoMale(){
-    cylinder(r=2.2,h=1.8);
+    cylinder(r=2.4,h=1.8);
 }
 //ignore utility
 module legoFemale(){
 difference(){
-    cylinder(r=3.25,h=4);
-    cylinder(r=2.4,h=4);
+    cylinder(r=3.25,h=8);
+    cylinder(r=2.4,h=8);
 }
 }
 //use this module if the lego builds on from the base    
@@ -38,18 +40,29 @@ module boardFemale(x,y){
 //fills a rectangle of w (x direction) and h (y direction). Module will estimate based on closest lego standard
 //male part is built on
 module fillMale(w,h){
-    translate([4,4,0]) boardMale((w+.2)/8,(h+.2)/8);
+    translate([4,4,0]) boardMale((w+16.2)/8,((h+16.2)/8));
 }
 //female part is built into 
 module fillFemale(w,h){
-    boardFemale(((w+.2)/8)-1,((h+.2)/8)-1);
+    boardFemale(((w+16.2)/8),((h+16.2)/8));
 }
 
 
 
 module testLego(w,h){
-    fillMale(w,h);
-    translate([20+w,0,0])fillFemale(w,h);
+union(){
+    cube([w,h,3]);
+    intersection(){
+        cube([(w/2)-4,h,3+lmh]);
+        translate([0,0,3]) fillMale(w,h);
+    }
+    intersection(){
+        translate([(w/2)+4,0,0]) cube([(w/2)-4,h,3+lfh]);
+        translate([(w/2)+4,0,3]) fillFemale(w,h);
+    }
 }
-fillFemale(18,26);
-//fillMale(15.8,23.8);
+}
+
+testLego(40,20);
+//fillFemale(18,26);
+//fillMale(18,26);
