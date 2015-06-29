@@ -11,7 +11,7 @@ include<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoS
 module female(w,h,d,t,r,s){
     difference(){
         cube([w,d,h]);
-        translate([w/2,(d-t)/2,0]) cylinder(r=r+s, h=h);
+        translate([w/2-r-s,(d-t)/2-r-s,0]) cube([2*(r+s),2*(r+s),h]);
         translate([t,-t,t]) cube([w-2*t,d+s,h-2*t]);
     }
 }
@@ -44,7 +44,7 @@ union(){
 module male(w,h,d,t,r,s){
     difference(){
        translate([t+s,-t,t+s]) cube([w-2*t-2*s,d,h-2*t-2*s]);
-       translate([w/2,(d-t)/2,0]) cylinder(r=r+s, h=h);
+       translate([w/2-r-s,(d-t)/2-r-s,0]) cube([2*(r+s),2*(r+s),h]);
     }
 }   
 module legoMMale(w,h,d,t,r,s){
@@ -60,7 +60,7 @@ module legoFMale(w,h,d,t,r,s){
 union(){
    male(w,h,d,t,r,s);
    intersection(){
-       translate([0,-t,0]) male(w,h,d,t,r,s);
+       translate([0,-lfh,0]) male(w,h,d,t,r,s);
        translate([0,-t,0])rotate([90,0,0]) fillFemale(w,h);
     }
 }
@@ -73,7 +73,7 @@ union(){
 module pin(w,h,d,t,r,s){
 union(){
     translate([0,-t,h]) cube([w,d,t]);//top
-    translate([w/2,(d-t)/2,0]) cylinder(r=r, h=h);; 
+    translate([w/2-r,(d-t)/2-r,0]) cube([2*r,2*r,h]); 
 }
 }
 
@@ -84,4 +84,4 @@ module model(w,h,d,t,r,s){
    pin(w,h,d,t,r,s);
 }
 
-legoFMale(40,25,20,4,4,1.5);
+pin(40,25,25,4,4,1.5);

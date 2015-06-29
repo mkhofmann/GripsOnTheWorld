@@ -28,7 +28,7 @@ module legoMMale(w,d,h,dl,wl,wi,wt,dt,s){
 union(){
     male(w,d,h,dl,wl,wi,wt,dt,s);
     intersection(){
-        translate([0,-lmh,0]) cube([w,d,h]);
+        translate([0,-lmh,0]) cube([w,lmh,h]);
         rotate([90,0,0]) fillMale(w,h);
     }
 }
@@ -37,7 +37,7 @@ module legoFMale(w,d,h,dl,wl,wi,wt,dt,s){
 union(){
     male(w,d,h,dl,wl,wi,wt,dt,s);
     intersection(){
-        translate([0,-lfh,0]) cube([w,d,h]);
+        translate([0,-lfh,0]) cube([w,lfh,h]);
         rotate([90,0,0]) fillFemale(w,h);
     }
 }
@@ -96,5 +96,5 @@ module model(w,d,h,dl,wl,wi,wt,dt,s){
     male(w,d,h,dl,wl,wi,wt,dt,s);
     translate([0,d+s,0]) female(w,d,h,dl,wl,wi,wt,dt,s);
 }
-legoMFemale(40,5,16,25,3,8,8,5,1.5);
+legoFMaleSliced(40,5,16,25,3,8,8,5,1.5);
 

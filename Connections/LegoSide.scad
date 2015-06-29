@@ -63,6 +63,6 @@ union(){
 }
 }
 
-testLego(40,20);
+//testLego(40,20);
 //fillFemale(18,26);
 //fillMale(18,26);

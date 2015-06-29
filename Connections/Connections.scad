@@ -26,13 +26,13 @@ difference(){
 module TinkerFemale(){//functional
 rotate([90,0,0])difference(){
     cylinder(r=16,h=16);
-    translate([-16,-16,0]) cube([32,16,16]);
-   for(i=[-45:45:45]){
+    cylinder(r=3.5,h=16);
+   for(i=[-45:45:315]){
         rotate([0,0,i]) translate([0,16,8]) rotate([90,0,0]) cylinder(r=3.5, h=10);
     }
 }
 }
-//TinkerFemale();
+TinkerFemale();
 module TinkerFemaleSphere(){
 difference(){
     sphere(r=16);
@@ -52,7 +52,7 @@ module ZoobMale(){
         translate([0,0,3+9.15]) sphere(r=9.15);
     }
 }
-ZoobMale();
+//ZoobMale();
 module ZoobFemale(){
 translate([0,0,13])difference(){
     union(){
