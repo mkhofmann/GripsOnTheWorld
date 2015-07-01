@@ -75,7 +75,6 @@ module legoMEndOfWristCyl(){
         }
     }
 }
-legoMEndOfWristShelf();
 module legoFEndOfWristCyl(){
     union(){
         endOfWristAdaptorCyl();

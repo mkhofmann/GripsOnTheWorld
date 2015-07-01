@@ -23,7 +23,7 @@ module pinCapped(h){
 module pinCap(){
     difference(){
         cylinder(r=8,h=6.5);
-        cylinder(r=4,h=6.5);
+        cylinder(r=3.75,h=6.5);
     }
 }
 
@@ -96,4 +96,4 @@ module model(){
     translate([30,-8,64]) rotate([0,90,0]) pinCap();
 }
 
-wristLegoM(50,50);
+wristLegoF(50,50);

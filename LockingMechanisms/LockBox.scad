@@ -1,4 +1,6 @@
 include<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Connections\\LegoSide.scad>;
+use<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\ARMs\\Gauntlet\\Gauntlet.scad>;
+include<C:\\Users\\Megan\\Documents\\GitHub\\GripsOnTheWorld\\Solutions\\Bow\\BowLocks.scad>;
 module female(w,h,d,t,s){
     difference(){
         cube([w,d,h]);
@@ -31,7 +33,7 @@ module legoMFemale(w,h,d,t,s){
 module male(w,h,d,t,s){
     union(){
         translate([t+s,t+s,t+s]) cube([w-t*2-t-s,d-t*2-2*s, h-t*2-2*s]);
-        translate([t+s,0,2*t+s]) cube([w-t*2-t-s,t+s,h-4*t-2*s]);
+        translate([t+s,-t,2*t+s]) cube([w-t*2-t-s,2*t+s,h-4*t-2*s]);
     }
 }
 
@@ -69,4 +71,36 @@ module model(w,h,d,t,s){
     female(w,h,d,t,s);
     lock(w,h,d,t,s);
 }
-legoFMale(31,38,24,7,1.5);
+//legoMFemale(31,38,24,7,1.5);
+
+wg=44;
+hg=32;
+dg=30;
+tg=6;
+sg=1.5;
+
+//model(wg,hg,dg,tg,sg);
+
+module gauntletFemale(){
+    union(){
+        //gauntlet();
+        translate([-.5,dg,hg]) rotate([180,0,0]) female(wg,hg,dg,tg,sg);
+    
+    }
+}
+
+module bow(){
+    union(){
+        translate([0,dg+18+tg,hg]) rotate([0,90,-90]) endOfWristAdaptorCube();
+        translate([-.5,dg,hg]) rotate([180,0,0]) male(wg,hg,dg,tg,sg);
+        
+    }
+}
+
+module bowPin(){
+    translate([-.5,dg,hg]) rotate([180,0,0]) lock(wg,hg,dg,tg,sg);
+}
+
+//bow();
+//bowPin();
+gauntletFemale();
