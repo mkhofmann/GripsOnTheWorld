@@ -2,7 +2,9 @@
 module gauntlet(){
 translate([22,-145,0])rotate([90,0,0]) import("lego_cuff_blank.stl", 3);
 }
-//gauntlet();
+//scale([1.15,1.15,1.15])gauntlet();
+
+
 t=4;
 module elaineGauntlet(){
     difference(){

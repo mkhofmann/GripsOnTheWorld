@@ -46,4 +46,4 @@ translate([0,0,t])rotate([90,0,0])union(){
     }
 }
 }
-legoFClip(30,40,5);   
+mountingClip(30,40,4);   
