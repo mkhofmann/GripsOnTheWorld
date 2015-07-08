@@ -28,22 +28,14 @@ module mountingClip(w,h,t){
     }
 }
 
-module legoMClip(w,h,t){
-translate([0,0,t])rotate([90,0,0])union(){
-    mountingClip(w,h,t);
-    intersection(){   
-        cube([w,4*t+lmh,h]);
-        translate([0,t*3+lmh,0]) rotate([90,0,0]) fillMale(w,h);
+boxClip(40,40,4);   
+
+module boxClip(w,h,t){
+    translate([w,0,0])union(){
+        clip(w,h,t);
+        difference(){
+            translate([-w,2*t,0]) cube([w,40,h]);
+            translate([-w+t,3*t,t]) cube([w-2*t,40-t,h-2*t]);
+        }
     }
 }
-}
-module legoFClip(w,h,t){
-translate([0,0,t])rotate([90,0,0])union(){
-    mountingClip(w,h,t);
-    intersection(){   
-        cube([w,4*t+lfh,h]);
-        translate([0,t*3+lfh,0]) rotate([90,0,0]) fillFemale(w,h);
-    }
-}
-}
-mountingClip(30,40,4);   

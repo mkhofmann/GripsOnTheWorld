@@ -9,8 +9,7 @@ module lock(wn,w,d,s){//d and h make square
         translate([0,d/4-s,d/4-s]) cube([wn+20,d/2+2*s,d+s]);
         }
         union(){
-            translate([wn+20,d/4-s,d/4-s]) cube([10+s,d/2+2*s,d/2+s]);
-            translate([wn+30,3/8*d-s,2/8*d-s]) cube([10+s,d/4+2*s,d/4+2*s]);  
+            translate([wn+20,d/4-s,d/4-s]) cube([30+s,d/2+2*s,d/2+s]); 
             translate([wn+40,d/4-s,d/4-s]) cube([20+s,d/2+2*s,3/4*d+s]);
         }
     }
@@ -32,27 +31,29 @@ module key(wn,w,d,s){
 
 module tumbler(wn,w,d,s){
     union(){
-            translate([wn+10,d/4,d/4]) cube([10,d/2,d/2]);
-            translate([wn+20,3/8*d,2/8*d]) cube([20,d/4,d/4]);  
-            translate([wn+40,d/4,d/4]) cube([10,d/2,d]);
+            translate([wn+10+s,d/4,d/4]) cube([30,d/2,d/2]); 
+            difference(){
+                translate([wn+40,d/4,d/4]) cube([8,d/2,3/2*d]);
+                translate([wn+44,d/2, d/2]) rotate([0,90,0]) cylinder(r=5.5, h=4);
+            }
         }
 }
 
 module model(wn,w,d,s){
     key(wn,w,d,s);
-    tumbler(wn,w,d,s);
+    translate([0,0,0]) tumbler(wn,w,d,s);
     lock(wn,w,d,s);
 }
 
-printTumbler(30,100,51,1.5);
+lock(30,100,51,1.5);
 
 //printTumbler(30,100,51,1.5);
 module printTumbler(wn,w,d,s){
-    union(){
-         translate([wn+20,3/8*d,2/8*d]) cube([20,d/4,d/4]);  
-         translate([wn+40,d/4,d/4]) cube([10,d/2,d]);
-    }
-    translate([-10,0,0]) translate([wn+10,d/4,d/4]) cube([10,d/2,d/2]);
+    translate([wn+10+s,d/4,d/4]) cube([30,d/2,d/2]); 
+    translate([10,0,0]) difference(){
+                translate([wn+40,d/4,d/4]) cube([8,d/2,3/2*d]);
+                translate([wn+44,d/2, d/2]) rotate([0,90,0]) cylinder(r=5.5, h=4);
+            }
 }
 
 //cut to print
