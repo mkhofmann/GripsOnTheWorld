@@ -8,8 +8,6 @@ module yarnhook(){
     }
 }
 
-//yarnhook();
-
 module yarnDock(){
     difference(){
         union(){
@@ -22,4 +20,17 @@ module yarnDock(){
     }
 }
 
-yarnDock();
+//yarnDock();
+
+module yarnBowl(){
+    translate([0,0,0]) import("spiralyarnbowl.stl",3);
+}
+
+module yarnBowlClip(){
+    union(){
+        translate([0,0,10]) scale([.6,.6,.6]) yarnBowl();
+        translate([-25,25,0]) rotate([90,0,0])mountingClip(50,50,4);
+    }
+}
+
+yarnBowlClip();

@@ -21,7 +21,7 @@ knifeGuardLock();
 module knifeGuardLock(){//kharan's measurements
     union(){
         lock(30,95,51,1.5);
-        translate([95,25,0]) knifeGuardCustom(4,95); 
+        translate([95,25,0]) knifeGuardCustom(4.15,95); 
     }
 }
 //knifeGuard(2.5);
