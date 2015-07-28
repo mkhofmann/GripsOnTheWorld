@@ -11,7 +11,7 @@ module lock(r,h,zs,xs,m){
 }
 
 
-module key(r,h){
+module key(r,h,zs,xs,m){
    union(){
        for(i=[0:h/(2*zs)]){
             translate([-i*xs,-i*xs,i*zs]) cube([i*xs+r,i*xs+r,zs]);
@@ -31,5 +31,5 @@ module model(r,h,a){
     key(r,h);
 }
 
-lock(20,40,.1,.05,30);
+key(20,40,.1,.05,30);
 //cut(20,40);
