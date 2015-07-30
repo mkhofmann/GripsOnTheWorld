@@ -45,4 +45,10 @@ module lockMountAdjust(){
     }
 }
 
-angleBlock(15,20);
+//angleBlock(15,20);
+
+module triangle(a){
+    linear_extrude(height= 40) {polygon(points =[[0,0],[60,0],[0,60*tan(a)]]);
+    }
+}
+triangle(atan(2/3));
