@@ -12,6 +12,5 @@ cylinder(r=5.0,h=70.0);
 }
 union()  {
 translate([-20.5,-12.0,5.0])cube([41.0,24.0,5.0]);
-translate([-20.5,-12.0,5.0])scale([1.0,1.0,1.0])import("KNIFEGUARD.stl",3);
 }
 }

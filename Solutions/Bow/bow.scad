@@ -1,5 +1,1 @@
-
-intersection(){
-    import("rocker.stl",3);
-    cube([19,50,24]);
-}
+translate([42,0,0]) mirror([1,0,0])import("rocker.stl",3);
